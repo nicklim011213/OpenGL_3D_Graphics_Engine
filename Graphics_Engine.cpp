@@ -83,7 +83,6 @@ int main()
         ShaderProgram1.SetShaderValue("view", camera.view);
         glBindVertexArray(VAO);
         glDrawElements(GL_TRIANGLES, Scene1.GetIndexs().size(), GL_UNSIGNED_INT, 0);
-
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
