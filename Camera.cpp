@@ -3,48 +3,46 @@
 #include "glm/glm.hpp"
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include "Utility.cpp"
 
 class Camera
 {
 public:
 
 	float cameraSpeed = 2.5f;
-	glm::vec3 cameraPos, cameraTarget, cameraFront, cameraUp, cameraDirection, cameraRight;
+	glm::vec3 cameraPos, cameraFront, cameraUp;
 	glm::mat4 view;
 
 	Camera()
 	{
 		cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
-		cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
 		cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
 		cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 
-		cameraDirection = glm::normalize(cameraPos - cameraTarget);
-		cameraRight = glm::normalize(glm::cross(cameraUp, cameraDirection));
 		view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
 	}
 
-	void left()
+	void left(Utilites* util)
 	{
-		cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+		cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed * util->GetDeltaTime();
 		view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
 	}
 
-	void right()
+	void right(Utilites* util)
 	{
-		cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+		cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed * util->GetDeltaTime();
 		view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
 	}
 
-	void forward()
+	void forward(Utilites* util)
 	{
-		cameraPos += cameraSpeed * cameraFront;
+		cameraPos += cameraSpeed * cameraFront * util->GetDeltaTime();
 		view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
 	}
 
-	void backwards() 
+	void backwards(Utilites* util)
 	{
-		cameraPos -= cameraSpeed * cameraFront;
+		cameraPos -= cameraSpeed * cameraFront * util->GetDeltaTime();
 		view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
 	}
 };

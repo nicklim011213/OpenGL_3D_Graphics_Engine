@@ -19,7 +19,8 @@
 #include <glm/gtc/type_ptr.hpp>
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
-void processInput(GLFWwindow* window, Camera camera);
+void processInput(GLFWwindow* window, Camera* camera);
+void processInput(GLFWwindow* window, Camera* camera, Utilites* util);
 
 int main()
 {
@@ -72,12 +73,12 @@ int main()
 
     while (!glfwWindowShouldClose(window))
     {
-        util.GetDeltaTime();
+        util.RefreshDeltaTime();
 
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        processInput(window, camera);
+        processInput(window, &camera, &util);
 
         glUseProgram(ShaderProgram1.GetShaderProgramID());
         ShaderProgram1.SetShaderValue("view", camera.view);
@@ -96,16 +97,16 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
     glViewport(0, 0, width, height);
 }
 
-void processInput(GLFWwindow* window, Camera camera)
+void processInput(GLFWwindow* window, Camera* camera, Utilites* util)
 {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-        camera.forward();
+        camera->forward(util);
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-        camera.backwards();
+        camera->backwards(util);
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-        camera.left();
+        camera->left(util);
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-        camera.right();
+        camera->right(util);
 }
