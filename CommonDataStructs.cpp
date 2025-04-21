@@ -1,5 +1,4 @@
-#ifndef COMMONDATASTRUCTS
-#define COMMONDATASTRUCTS
+
 struct Point
 {
 public:
@@ -7,4 +6,3 @@ public:
 	float Y = 0;
 	float Z = 0;
 };
-#endif // !COMMONDATASTRUCTS

@@ -1,11 +1,9 @@
-#ifndef PIPELINE
-#define PIPELINE
-
 #include <glad.h> 
 #include <glfw3.h>
-#include "SceneHandler.cpp"
+#include "SceneHandler.h"
+#include "RenderPipeline.h"
 
-static unsigned int PipelineSetup(Scene scene)
+unsigned int PipelineSetup(Scene scene)
 {
     unsigned int VBO, VAO, EBO;
     glGenVertexArrays(1, &VAO);
@@ -28,4 +26,3 @@ static unsigned int PipelineSetup(Scene scene)
 
     return VAO;
 }
-#endif

@@ -1,26 +1,15 @@
-#ifndef UTIL
-#define UTIL
 #include <glad.h> 
 #include <glfw3.h>
+#include "Utility.h"
 
-class Utilites
-{
-    float lastFrame = 0.0f;
-    float deltaTime = 0.0f;
-
-public:
-
-    void RefreshDeltaTime()
+    void Utilites::RefreshDeltaTime()
     {
         float currentFrame = static_cast<float>(glfwGetTime());
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
     }
 
-    float GetDeltaTime()
+    float Utilites::GetDeltaTime()
     {
         return deltaTime;
     }
-};
-
-#endif

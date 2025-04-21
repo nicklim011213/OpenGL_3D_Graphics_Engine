@@ -7,12 +7,12 @@
 #include <unordered_map>
 #include "boost/filesystem.hpp"
 
-#include "ModelHandler.cpp"
-#include "ShaderHandler.cpp"
-#include "RenderPipeline.cpp"
-#include "SceneHandler.cpp"
-#include "Camera.cpp"
-#include "Utility.cpp"
+#include "ModelHandler.h"
+#include "ShaderHandler.h"
+#include "RenderPipeline.h"
+#include "SceneHandler.h"
+#include "Camera.h"
+#include "Utility.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -36,6 +36,7 @@ int main()
         return -1;
 
     glfwMakeContextCurrent(window);
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
         return -2;
@@ -79,6 +80,7 @@ int main()
         glClear(GL_COLOR_BUFFER_BIT);
 
         processInput(window, &camera, &util);
+        camera.HandleMouse(window);
 
         glUseProgram(ShaderProgram1.GetShaderProgramID());
         ShaderProgram1.SetShaderValue("view", camera.view);

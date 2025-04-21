@@ -1,23 +1,15 @@
-#ifndef MODELHANDLER
-#define MODELHANDLER
-
 #include <iostream>
 #include <vector>
-#include "CommonDataStructs.cpp"
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/lexical_cast.hpp>
 
-class Model
-{
-	std::vector<Point> Vertexs;
-	std::vector<int> TriangleIndexs;
-	int PointIndexOffset = 0;
+#include "CommonDataStructs.h"
+#include "ModelHandler.h"
 
-public:
 
-	Model(std::string Path)
+	Model::Model(std::string Path)
 	{
 		boost::filesystem::path ModelFolder = boost::filesystem::initial_path();
 		ModelFolder /= "Models";
@@ -52,15 +44,12 @@ public:
 		}
 	}
 
-	const std::vector<Point>& ReadVerts()
+	const std::vector<Point>& Model::ReadVerts()
 	{
 		return Vertexs;
 	}
 
-	const std::vector<int>& ReadTrianglesIndexs()
+	const std::vector<int>& Model::ReadTrianglesIndexs()
 	{
 		return TriangleIndexs;
 	}
-};
-
-#endif

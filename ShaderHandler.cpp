@@ -1,6 +1,3 @@
-#ifndef SHADERHANDLER
-#define SHADER
-
 #include <string>
 #include <iostream>
 #include <fstream>
@@ -8,21 +5,14 @@
 #include <boost/filesystem/fstream.hpp>
 #include <boost/algorithm/string.hpp>
 #include <vector>
-
 #include <glad.h> 
 #include <glfw3.h>
 #include "glm/glm.hpp"
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include "ShaderHandler.h"
 
-class Shader
-{
-	std::string Source;
-	unsigned int ShaderID = -1;
-
-public: 
-
-	Shader(std::string Name)
+	Shader::Shader(std::string Name)
 	{
 		boost::filesystem::path ShaderFolder = boost::filesystem::initial_path();
 		ShaderFolder /= "Shaders";
@@ -56,25 +46,17 @@ public:
 		}
 	}
 
-	int GetShaderID()
+	int Shader::GetShaderID()
 	{
 		return ShaderID;
 	}
-};
 
-class ShaderProgram
-{
-	std::vector<Shader> Shaders;
-	unsigned int ShaderProgramID;
-		
-public:
-
-	void AttachShader(Shader s)
+	void ShaderProgram::AttachShader(Shader s)
 	{
 		Shaders.push_back(s);
 	}
 
-	void UseShaders()
+	void ShaderProgram::UseShaders()
 	{
 		ShaderProgramID = glCreateProgram();
 		for (auto ittr = Shaders.begin(); ittr != Shaders.end(); ++ittr)
@@ -84,15 +66,12 @@ public:
 		glLinkProgram(ShaderProgramID);
 	}
 
-	unsigned int GetShaderProgramID()
+	unsigned int ShaderProgram::GetShaderProgramID()
 	{
 		return ShaderProgramID;
 	}
 
-	void SetShaderValue(std::string ValueName, glm::mat4 value)
+	void ShaderProgram::SetShaderValue(std::string ValueName, glm::mat4 value)
 	{
 		glUniformMatrix4fv(glGetUniformLocation(ShaderProgramID, ValueName.c_str()), 1, false, &value[0][0]);
 	}
-};
-
-#endif

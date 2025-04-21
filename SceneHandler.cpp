@@ -1,21 +1,10 @@
-#ifndef SCENE
-#define SCENE
-
 #include <string>
 #include <vector>
-#include "ModelHandler.cpp"
-#include "CommonDataStructs.cpp"
+#include "ModelHandler.h"
+#include "CommonDataStructs.h"
+#include "SceneHandler.h"
 
-class Scene
-{
-	int IndexOffset = 0;
-
-public:
-
-	std::vector<float> UnpackedPoints;
-	std::vector<unsigned int> TriangleIndexes;
-
-	void AddModel(Model model, Point Offset)
+	void Scene::AddModel(Model model, Point Offset)
 	{
 		for (int Index : model.ReadTrianglesIndexs())
 		{
@@ -31,7 +20,7 @@ public:
 		}
 	}
 
-	void AddModel(Model model)
+	void Scene::AddModel(Model model)
 	{
 		for (int Index : model.ReadTrianglesIndexs())
 		{
@@ -47,16 +36,13 @@ public:
 		}
 	}
 
-	std::vector<float>& GetPoints()
+	std::vector<float>& Scene::GetPoints()
 	{
 		return UnpackedPoints;
 	}
 
-	std::vector<unsigned int>& GetIndexs()
+	std::vector<unsigned int>& Scene::GetIndexs()
 	{
 		return TriangleIndexes;
 	}
-};
-
-#endif
 
