@@ -19,6 +19,7 @@ public:
 	float lastX = 1920 / 2;
 	float lastY = 1080 / 2;
 	double xpos = 1920 / 2, ypos = 1080 / 2;
+	bool FirstMouse = true;
 
 	Camera();
 	void left(Utilites* util);

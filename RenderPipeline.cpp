@@ -1,7 +1,7 @@
 #include <glad.h> 
 #include <glfw3.h>
-#include "SceneHandler.h"
 #include "RenderPipeline.h"
+#include "SceneHandler.h"
 
 unsigned int PipelineSetup(Scene scene)
 {

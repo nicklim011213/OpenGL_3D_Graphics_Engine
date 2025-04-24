@@ -1,5 +1,3 @@
-#include <glad.h> 
-#include <glfw3.h>
 #include "Utility.h"
 
     void Utilites::RefreshDeltaTime()

@@ -1,7 +1,3 @@
-#include "glm/glm.hpp"
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
-#include "Utility.h"
 #include "Camera.h"
 
 	Camera::Camera()
@@ -13,7 +9,6 @@
 		view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
 		CameraDirection.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
 		CameraDirection.y = sin(glm::radians(pitch));
-
 	}
 
 	void Camera::left(Utilites* util)
@@ -42,6 +37,12 @@
 
 	void Camera::HandleMouse(GLFWwindow* window)
 	{
+		if (FirstMouse)
+		{
+			lastX = xpos;
+			lastY = ypos;
+			FirstMouse = false;
+		}
 		float xposCursor = static_cast<float>(xpos);
 		float yposCursor = static_cast<float>(ypos);
 		glfwGetCursorPos(window, &xpos, &ypos);

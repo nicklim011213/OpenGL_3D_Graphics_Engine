@@ -1,6 +1,7 @@
 #ifndef MODELHANDLER
 #define MODELHANDLER
 
+#include <string>
 #include <iostream>
 #include <vector>
 #include "CommonDataStructs.h"
@@ -19,9 +20,9 @@ public:
 
 	Model(std::string Path);
 
-	const std::vector<Point>& ReadVerts();
+	std::vector<Point> ReadVerts();
 
-	const std::vector<int>& ReadTrianglesIndexs();
+	std::vector<int> ReadTrianglesIndexs();
 };
 
 #endif

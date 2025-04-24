@@ -4,7 +4,6 @@
 #include <string>
 #include <vector>
 #include "ModelHandler.h"
-#include "CommonDataStructs.h"
 
 class Scene
 {

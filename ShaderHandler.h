@@ -1,5 +1,5 @@
 #ifndef SHADERHANDLER
-#define SHADER
+#define SHADERHANDLER
 
 #include <string>
 #include <iostream>

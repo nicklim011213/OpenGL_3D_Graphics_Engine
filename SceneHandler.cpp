@@ -1,7 +1,3 @@
-#include <string>
-#include <vector>
-#include "ModelHandler.h"
-#include "CommonDataStructs.h"
 #include "SceneHandler.h"
 
 	void Scene::AddModel(Model model, Point Offset)

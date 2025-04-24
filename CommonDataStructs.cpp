@@ -1,8 +1,16 @@
+#include "CommonDataStructs.h"
 
-struct Point
+
+Point::Point(float x, float y, float z)
 {
-public:
-	float X = 0;
-	float Y = 0;
-	float Z = 0;
+	X = x;
+	Y = y;
+	Z = z;
 };
+
+Point::Point()
+{
+	X = 0;
+	Y = 0;
+	Z = 0;
+}
