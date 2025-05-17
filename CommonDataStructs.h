@@ -10,4 +10,9 @@ struct Point
 
 	Point();
 };
+
+struct RenderBufferObjects
+{
+	unsigned int VAO;
+};
 #endif // !COMMONDATASTRUCTS

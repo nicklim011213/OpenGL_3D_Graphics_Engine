@@ -1,5 +1,16 @@
 #include "ShaderHandler.h"
 
+#include <glad.h> 
+#include <glfw3.h>
+#include "glm/glm.hpp"
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+#include <iostream>
+#include <fstream>
+#include <boost/filesystem.hpp>
+#include <boost/filesystem/fstream.hpp>
+#include <boost/algorithm/string.hpp>
+
 	Shader::Shader(std::string Name)
 	{
 		boost::filesystem::path ShaderFolder = boost::filesystem::initial_path();

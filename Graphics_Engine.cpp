@@ -10,6 +10,7 @@
 #include "ShaderHandler.h"
 #include "RenderPipeline.h"
 #include "Camera.h"
+#include "PipelineFunctions.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -60,15 +61,15 @@ int main()
     ShaderProgram1.SetShaderValue("view", camera.view);
 
     Model Model1("Box.obx");
-    Point Offset(2.0f, 0.0f, 0.0f);
 
     Scene Scene1;
     Scene1.AddModel(Model1);
-    Scene1.AddModel(Model1, Point(2, 0, 0));
 
     Utilites util;
 
-    unsigned int VAO = PipelineSetup(Scene1);
+    RenderPipeline MyPipeline;
+	MyPipeline.AttachImplementation(VertexOnly);
+	std::vector<RenderBufferObjects> RBOs = MyPipeline.Execute(Scene1);
 
     while (!glfwWindowShouldClose(window))
     {
@@ -82,10 +83,13 @@ int main()
 
         glUseProgram(ShaderProgram1.GetShaderProgramID());
         ShaderProgram1.SetShaderValue("view", camera.view);
-        glBindVertexArray(VAO);
-        glDrawElements(GL_TRIANGLES, Scene1.GetIndexs().size(), GL_UNSIGNED_INT, 0);
+		for (RenderBufferObjects RBO : RBOs)
+		{
+            glBindVertexArray(RBO.VAO);
+            glDrawElements(GL_TRIANGLES, Scene1.GetIndexs().size(), GL_UNSIGNED_INT, 0);
+		}
         glfwSwapBuffers(window);
-        glfwPollEvents();
+        glfwPollEvents();   
     }
 
     glfwTerminate();

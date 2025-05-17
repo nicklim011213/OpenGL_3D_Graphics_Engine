@@ -1,4 +1,24 @@
 #include "ModelHandler.h"
+#include <boost/filesystem.hpp>
+#include <boost/filesystem/fstream.hpp>
+#include <boost/algorithm/string/predicate.hpp>
+#include <boost/lexical_cast.hpp>
+#include <iostream>
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
+#include <glad.h> 
+#include <glfw3.h>
+
+	void Model::ApplyTexture(std::string Path, int Width, int Height, int ColorDepth)
+	{
+		unsigned char* data = stbi_load(Path.c_str(), &Width, &Height, &ColorDepth, 0);
+		unsigned int TextureID = -1;
+		glGenTextures(1, &TextureID);
+		glBindTexture(GL_TEXTURE_2D, TextureID);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Width, Height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+		stbi_image_free(data);
+	}
 
 	Model::Model(std::string Path)
 	{
@@ -35,6 +55,23 @@
 			else if (boost::algorithm::contains(line, "//"))
 			{
 				// For comments
+			}
+			else if (boost::algorithm::contains(line, "&"))
+			{
+				IsTextured = true;
+				size_t Xstart, Ystart = 0;
+				Xstart = line.find("X:");
+				Ystart = line.find("Y:");
+
+				std::string XStr, YStr;
+				XStr = line.substr(Xstart + 2, Ystart - Xstart - 2);
+				YStr = line.substr(Ystart + 2);
+
+				Point Temp;
+				Temp.X = boost::lexical_cast<float>(XStr);
+				Temp.Y = boost::lexical_cast<float>(YStr);
+				Temp.Z = -1.0f;
+				Vertexs.push_back(Temp);
 			}
 		}
 	}

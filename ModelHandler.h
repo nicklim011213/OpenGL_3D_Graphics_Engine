@@ -2,27 +2,36 @@
 #define MODELHANDLER
 
 #include <string>
-#include <iostream>
 #include <vector>
 #include "CommonDataStructs.h"
-#include <boost/filesystem.hpp>
-#include <boost/filesystem/fstream.hpp>
-#include <boost/algorithm/string/predicate.hpp>
-#include <boost/lexical_cast.hpp>
 
 class Model
 {
 	std::vector<Point> Vertexs;
 	std::vector<int> TriangleIndexs;
 	int PointIndexOffset = 0;
+	bool IsTextured = false;
+	bool IsColored = false;
 
 public:
 
 	Model(std::string Path);
 
+	void ApplyTexture(std::string Path, int Width, int Height, int ColorDepth = 8);
+
 	std::vector<Point> ReadVerts();
 
 	std::vector<int> ReadTrianglesIndexs();
+
+	bool IsTexturedModel()
+	{
+		return IsTextured;
+	}
+
+	bool IsColoredModel()
+	{
+		return IsColored;
+	}
 };
 
 #endif

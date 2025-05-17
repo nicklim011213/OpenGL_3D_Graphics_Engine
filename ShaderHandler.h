@@ -2,18 +2,8 @@
 #define SHADERHANDLER
 
 #include <string>
-#include <iostream>
-#include <fstream>
-#include <boost/filesystem.hpp>
-#include <boost/filesystem/fstream.hpp>
-#include <boost/algorithm/string.hpp>
 #include <vector>
-
-#include <glad.h> 
-#include <glfw3.h>
 #include "glm/glm.hpp"
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
 
 class Shader
 {
