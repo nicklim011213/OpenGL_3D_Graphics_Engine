@@ -3,35 +3,52 @@
 
 #include <vector>
 #include "ModelHandler.h"
+#include "ShaderHandler.h"
+#include "CommonDataStructs.h"
 
 class Scene
 {
 	int IndexOffset = 0;
-	int IndexOffset_Textured = 0;
+	UnpackagedPoints(*ModelHandler)(Model model) = nullptr;
+	std::vector<float> Points;
+	std::vector<unsigned int> Indexes;
+	std::vector<float> Textures;
+	std::vector<int8_t> Colors;
 
 public:
 
-	std::vector<float> UnpackedPoints;
-	std::vector<unsigned int> TriangleIndexes;
+	int ShaderProgramID = 0;
 
-	std::vector<float> UnpackedPoints_Textured;
-	std::vector<unsigned int> TriangleIndexes_Textured;
+	void AttachShaderProgram(ShaderProgram shaderProgram);
 
-	void AddModel(Model model, Point Offset);
+	void AttachModelHandler(UnpackagedPoints(*ModelHandler)(Model model));
 
-	void AddModel(Model model);
+	void AttachModel(Model model);
 
-	void AddTexturedModel(Model model, Point Offset);
+	std::vector<float>& GetPoints()
+	{
+		return Points;
+	}
 
-	void AddTexturedModel(Model model);
+	std::vector<unsigned int>& GetIndexs()
+	{
+		return Indexes;
+	}
 
-	std::vector<float>& GetPoints();
+	std::vector<float>& GetTextures()
+	{
+		return Textures;
+	}
 
-	std::vector<unsigned int>& GetIndexs();
+	std::vector<int8_t>& GetColors()
+	{
+		return Colors;
+	}
 
-	std::vector<float>& GetPoints_Textured();
-
-	std::vector<unsigned int>& GetIndexs_Textured();
+	int GetIndexOffset()
+	{
+		return IndexOffset;
+	}
 };
 
 #endif

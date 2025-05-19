@@ -1,86 +1,21 @@
 #include "SceneHandler.h"
 
-	void Scene::AddModel(Model model, Point Offset)
+	void Scene::AttachShaderProgram(ShaderProgram shaderProgram)
 	{
-		for (int Index : model.ReadTrianglesIndexs())
-		{
-			TriangleIndexes.push_back(Index + IndexOffset);
-		}
-
-		for (Point point : model.ReadVerts())
-		{
-			UnpackedPoints.push_back(point.X + Offset.X);
-			UnpackedPoints.push_back(point.Y + Offset.Y);
-			UnpackedPoints.push_back(point.Z + Offset.Z);
-			++IndexOffset;
-		}
+		ShaderProgramID = shaderProgram.GetShaderProgramID();
 	}
 
-	void Scene::AddModel(Model model)
+	void Scene::AttachModelHandler(UnpackagedPoints(*ModelHandler)(Model model))
 	{
-		for (int Index : model.ReadTrianglesIndexs())
-		{
-			TriangleIndexes.push_back(Index + IndexOffset);
-		}
-
-		for (Point point : model.ReadVerts())
-		{
-			UnpackedPoints.push_back(point.X);
-			UnpackedPoints.push_back(point.Y);
-			UnpackedPoints.push_back(point.Z);
-			++IndexOffset;
-		}
+		this->ModelHandler = ModelHandler;
 	}
 
-	void Scene::AddTexturedModel(Model model, Point Offset)
+	void Scene::AttachModel(Model model)
 	{
-		for (int Index : model.ReadTrianglesIndexs())
-		{
-			TriangleIndexes_Textured.push_back(Index + IndexOffset);
-		}
-
-		for (Point point : model.ReadVerts())
-		{
-			UnpackedPoints_Textured.push_back(point.X + Offset.X);
-			UnpackedPoints_Textured.push_back(point.Y + Offset.Y);
-			UnpackedPoints_Textured.push_back(point.Z + Offset.Z);
-			++IndexOffset_Textured;
-		}
+		UnpackagedPoints UnpackagedModel = ModelHandler(model);
+		Indexes.insert(Indexes.end(), UnpackagedModel.Indexes.begin(), UnpackagedModel.Indexes.end());
+		Points.insert(Points.end(), UnpackagedModel.Points.begin(), UnpackagedModel.Points.end());
+		Colors.insert(Colors.end(), UnpackagedModel.Colors.begin(), UnpackagedModel.Colors.end());
+		Textures.insert(Textures.end(), UnpackagedModel.Textures.begin(), UnpackagedModel.Textures.end());
+		IndexOffset += UnpackagedModel.IndexOffset;
 	}
-
-	void Scene::AddTexturedModel(Model model)
-	{
-		for (int Index : model.ReadTrianglesIndexs())
-		{
-			TriangleIndexes_Textured.push_back(Index + IndexOffset_Textured);
-		}
-
-		for (Point point : model.ReadVerts())
-		{
-			UnpackedPoints_Textured.push_back(point.X);
-			UnpackedPoints_Textured.push_back(point.Y);
-			UnpackedPoints_Textured.push_back(point.Z);
-			++IndexOffset_Textured;
-		}
-	}
-
-	std::vector<float>& Scene::GetPoints()
-	{
-		return UnpackedPoints;
-	}
-
-	std::vector<unsigned int>& Scene::GetIndexs()
-	{
-		return TriangleIndexes;
-	}
-
-	std::vector<float>& Scene::GetPoints_Textured()
-	{
-		return UnpackedPoints_Textured;
-	}
-
-	std::vector<unsigned int>& Scene::GetIndexs_Textured()
-	{
-		return TriangleIndexes_Textured;
-	}
-

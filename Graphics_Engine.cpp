@@ -11,6 +11,7 @@
 #include "RenderPipeline.h"
 #include "Camera.h"
 #include "PipelineFunctions.h"
+#include "SceneFunctions.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -39,37 +40,39 @@ int main()
         return -2;
 
     glViewport(0, 0, 1920, 1080);
-
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
+
+    // Shader Block
     Shader Shader1("prespective.vs");
     Shader Shader2("solid_orange_test.fs");
 
     ShaderProgram ShaderProgram1;
     ShaderProgram1.AttachShader(Shader1);
     ShaderProgram1.AttachShader(Shader2);
-
     glm::mat4 model = glm::mat4(1.0f);
     glm::mat4 proj = glm::perspective(glm::radians(45.0f), (float)1920 / (float)1080, 0.1f, 100.0f);
     Camera camera;
 
     ShaderProgram1.UseShaders();
     glUseProgram(ShaderProgram1.GetShaderProgramID());
-
     ShaderProgram1.SetShaderValue("model", model);
     ShaderProgram1.SetShaderValue("projection", proj);
     ShaderProgram1.SetShaderValue("view", camera.view);
+	// Shader Block End
+
+    Utilites util;
 
     Model Model1("Box.obx");
 
     Scene Scene1;
-    Scene1.AddModel(Model1);
-
-    Utilites util;
+	Scene1.AttachModelHandler(AddModelVertex);
+	Scene1.AttachModel(Model1);
 
     RenderPipeline MyPipeline;
 	MyPipeline.AttachImplementation(VertexOnly);
 	std::vector<RenderBufferObjects> RBOs = MyPipeline.Execute(Scene1);
+
 
     while (!glfwWindowShouldClose(window))
     {

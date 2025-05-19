@@ -31,30 +31,4 @@ RenderBufferObjects VertexOnly(Scene scene)
 	return Result;
 }
 
-RenderBufferObjects VertexTexture(Scene scene)
-{
-    RenderBufferObjects Result;
-    unsigned int VBO, VAO, EBO;
-    glGenVertexArrays(1, &VAO);
-    glGenBuffers(1, &VBO);
-    glGenBuffers(1, &EBO);
-
-    glBindVertexArray(VAO);
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, scene.GetPoints_Textured().size() * sizeof(float), scene.GetPoints_Textured().data(), GL_STATIC_DRAW);
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, scene.GetIndexs_Textured().size() * sizeof(unsigned int), scene.GetIndexs_Textured().data(), GL_STATIC_DRAW);
-
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
-    glEnableVertexAttribArray(1);
-
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindVertexArray(0);
-    Result.VAO = VAO;
-	return Result;
-}
-
 #endif
