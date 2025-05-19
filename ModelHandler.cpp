@@ -3,6 +3,7 @@
 #include <boost/filesystem/fstream.hpp>
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/lexical_cast.hpp>
+#include <boost/algorithm/string.hpp>
 #include <iostream>
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
@@ -50,11 +51,13 @@
 			}
 			else if (boost::algorithm::contains(line, "$"))
 			{
-				TriangleIndexs.push_back(boost::lexical_cast<int>(line.substr(1)));
-			}
-			else if (boost::algorithm::contains(line, "//"))
-			{
-				// For comments
+				line = line.substr(1);
+				std::vector<std::string> SplitValues;
+				boost::split(SplitValues, line, boost::is_any_of(","));
+				for (std::string SplitValue : SplitValues)
+				{
+					TriangleIndexs.push_back(boost::lexical_cast<int>(SplitValue));
+				}
 			}
 			else if (boost::algorithm::contains(line, "&"))
 			{
