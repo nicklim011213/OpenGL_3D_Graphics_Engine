@@ -44,8 +44,8 @@ int main()
 
 
     // Shader Block
-    Shader Shader1("prespective.vs");
-    Shader Shader2("solid_orange_test.fs");
+    Shader Shader1("prespective_color.vs");
+    Shader Shader2("ColorInVertex.fs");
 
     ShaderProgram ShaderProgram1;
     ShaderProgram1.AttachShader(Shader1);
@@ -63,14 +63,14 @@ int main()
 
     Utilites util;
 
-    Model Model1("Box.obx");
+    Model Model1("BoxStd2.obx");
 
     Scene Scene1;
-	Scene1.AttachModelHandler(AddModelVertex);
+	Scene1.AttachModelHandler(AddModelVertexColor);
 	Scene1.AttachModel(Model1);
 
     RenderPipeline MyPipeline;
-	MyPipeline.AttachImplementation(VertexOnly);
+	MyPipeline.AttachImplementation(VertexColor);
 	std::vector<RenderBufferObjects> RBOs = MyPipeline.Execute(Scene1);
 
 

@@ -49,6 +49,32 @@
 				Temp.Z = boost::lexical_cast<float>(ZStr);
 				Vertexs.push_back(Temp);
 			}
+			else if (boost::algorithm::contains(line, "@"))
+			{
+				// Possible new standard, not identifiers, just raw data in a set order
+				line = line.substr(1);
+				std::vector<std::string> SplitValues;
+				boost::split(SplitValues, line, boost::is_any_of(","));
+				Point Temp;
+				if (SplitValues.size() >= 3)
+				{
+					Temp.X = boost::lexical_cast<float>(SplitValues[0]);
+					Temp.Y = boost::lexical_cast<float>(SplitValues[1]);
+					Temp.Z = boost::lexical_cast<float>(SplitValues[2]);
+				}
+				if (SplitValues.size() >= 6)
+				{
+					Temp.C1 = boost::lexical_cast<float>(SplitValues[3]);
+					Temp.C2 = boost::lexical_cast<float>(SplitValues[4]);
+					Temp.C3 = boost::lexical_cast<float>(SplitValues[5]);
+				}
+				if (SplitValues.size() >= 8)
+				{
+					Temp.T1 = boost::lexical_cast<float>(SplitValues[6]);
+					Temp.T2 = boost::lexical_cast<float>(SplitValues[7]);
+				}
+				Vertexs.push_back(Temp);
+			}
 			else if (boost::algorithm::contains(line, "$"))
 			{
 				line = line.substr(1);

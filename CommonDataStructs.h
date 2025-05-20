@@ -9,9 +9,9 @@ struct Point
 	float Y = 0;
 	float Z = 0;
 	// Color Values
-	int8_t C1 = 0;
-	int8_t C2 = 0;
-	int8_t C3 = 0;
+	float C1 = 0;
+	float C2 = 0;
+	float C3 = 0;
 	// Textures Values
 	float T1 = 0;
 	float T2 = 0;
@@ -31,7 +31,7 @@ struct UnpackagedPoints
 	std::vector<float> Points;
 	std::vector<unsigned int> Indexes;
 	std::vector<float> Textures;
-	std::vector<int8_t> Colors;
+	std::vector<float> Colors;
 	int IndexOffset = 0;
 };
 #endif // !COMMONDATASTRUCTS
